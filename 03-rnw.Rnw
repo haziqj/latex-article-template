@@ -1,0 +1,49 @@
+%%!TEX root = main.Rnw
+%\documentclass[class=article, crop=false]{standalone}
+%\ifstandalone
+%\usepackage{haziq_article}
+%\fi
+%\begin{document}
+
+<<include = FALSE, cache = FALSE>>=
+# patchDVI options
+patchDVI::useknitr()
+#.SweaveFiles <- "main.Rnw"
+.TexRoot <- "main.tex"
+.SweaveMake <- 2
+
+# knitr options
+# options(prompt = "> ")
+knitr::opts_chunk$set(prompt = FALSE, fig.align = "center", fig.width = 7, fig.height = 5)
+knitr::knit_theme$set("bclear")
+@
+
+We can include some R code here. Hello
+
+<<cache = TRUE>>=
+library(iprior)
+mod <- ipriorOptim(kernL(y ~ . ^ 2, data = simdat))
+print(mod)
+@
+<<iprior.plot, echo = FALSE, fig.cap = "This is a caption.", fig.pos = "h">>=
+plot(mod, plots = "fitted")
+@
+
+The plot in Figure \ref{fig:iprior.plot} is explained in further detail in \cite{jamil2017}. Notice that I have used a reference to the figure via \verb@\ref{fig:<name-of-chunk>}@. The following shows a side-by-side plot. We can also reference them Figure \ref{fig:iprior.residplot1} and Figure \ref{fig:iprior.residplot2}.
+
+<<iprior.residplot, echo = FALSE, , results = "hide", fig.width = 5, fig.height = 5, out.width='7cm', out.height='7cm', fig.show='hold', fig.cap = "Side-by-side plot", fig.subcap = c("The left plot.", "And the right one."), fig.align = "default">>=
+plot(mod, plots = c(2,3))
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% REFERENCES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\ifstandalone
+%\nocite{*}
+%\bibliographystyle{apalike}
+%\bibliography{haziq}
+%\fi
+
+%\end{document}
+
+

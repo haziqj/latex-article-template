@@ -1,0 +1,241 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Structure
+\usepackage[a4paper, centering]{geometry}
+\usepackage{standalone}
+%\usepackage{import}
+
+% Typeset and appearance
+\usepackage[english]{babel}   % manages structure of paper better
+\usepackage[]{xcolor}  % options: usenames, dvipsnames, svgnames, table
+\usepackage{soul}  % for highlighting text
+\usepackage{url}
+\usepackage{hyperref}
+%\usepackage{fancyhdr}  % headers and footers
+%	\pagestyle{fancy}
+%	\renewcommand{\headrulewidth}{0pt} \renewcommand{\footrulewidth}{0pt}
+% 	\lhead{} 
+% 	\rhead{}
+% 	\chead{\leftmark}
+\usepackage[utf8]{inputenc}  % To get accents on letters
+\usepackage[T1]{fontenc}     % e.g. \"a
+\usepackage{nicefrac}   % To get nice typography for units
+\usepackage{units}      % and fractions
+
+% Coding
+\usepackage{verbatim}
+\usepackage{moreverb}
+	\let\verbatiminput=\verbatimtabinput
+	\def\verbatimtabsize{4\relax} 
+\usepackage{algorithmicx}
+
+% Mathematics
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+	\newtheorem{thm}{Theorem}
+%	\theoremstyle{definition}
+	\newtheorem{defn}{Definition}
+	\newtheorem{lem}{Lemma}%[section]
+	\newtheorem{corr}{Corollary}%[section]
+	\newtheorem{remark}{Remark}
+\usepackage{dsfont}  % for indicator variables \mathsds{1}
+\usepackage{bm}  % for better bold script
+
+% Bibliography
+\usepackage[longnamesfirst]{natbib}
+  \bibpunct{(}{)}{;}{a}{,}{,~}
+  \addto\captionsenglish{\renewcommand{\bibname}{References}}  % change the name of Bibliography section
+
+
+
+
+
+% Paragraph settings
+\usepackage{parskip}  
+\setlength{\parindent}{15pt}  % default indentation
+
+% Line spacing
+\usepackage{setspace}\singlespacing % or \onehalfspacing or \doublespacing
+
+% Figures
+\usepackage{float}  
+\usepackage{graphicx}
+%\usepackage{subfig} 
+\usepackage{subcaption}  % an alternative package for sub-figures (preferred)
+	\newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}  % knitr
+\usepackage{rotfloat}	
+
+% Tables
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+%\usepackage{dcolumn}  % align columns on a decimal point
+
+% Miscellaneous
+\usepackage{lipsum}
+\usepackage{todonotes}
+	\presetkeys{todonotes}{noline, size=\tiny}{}
+	\reversemarginpar
+	\setlength{\marginparwidth}{1.8cm}
+	\newcounter{todocounter}
+\usepackage{pifont}
+	\newcommand{\cmark}{\ding{51}}  % check mark
+	\newcommand{\xmark}{\ding{55}}  % x mark
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% MATHS SYMBOLS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Vectors and matrices
+\newcommand{\bzero}{{\mathbf 0}}
+\newcommand{\bone}{{\mathbf 1}}
+\newcommand{\ba}{{\mathbf a}}
+\newcommand{\bb}{{\mathbf b}}
+\newcommand{\bc}{{\mathbf c}}
+\newcommand{\bd}{{\mathbf d}}
+\newcommand{\be}{{\mathbf e}}
+\newcommand{\bff}{{\mathbf f}}
+\newcommand{\bg}{{\mathbf g}}
+\newcommand{\bh}{{\mathbf h}}
+\newcommand{\bi}{{\mathbf i}}
+\newcommand{\bj}{{\mathbf j}}
+\newcommand{\bk}{{\mathbf k}}
+\newcommand{\bl}{{\mathbf l}}
+\newcommand{\bmm}{{\mathbf m}}
+\newcommand{\bn}{{\mathbf n}}
+\newcommand{\bo}{{\mathbf o}}
+\newcommand{\bp}{{\mathbf p}}
+\newcommand{\bq}{{\mathbf q}}
+\newcommand{\br}{{\mathbf r}}
+\newcommand{\bs}{{\mathbf s}}
+\newcommand{\bt}{{\mathbf t}}
+\newcommand{\bu}{{\mathbf u}}
+\newcommand{\bv}{{\mathbf v}}
+\newcommand{\bw}{{\mathbf w}}
+\newcommand{\bx}{{\mathbf x}}
+\newcommand{\by}{{\mathbf y}}
+\newcommand{\bz}{{\mathbf z}}
+\newcommand{\bA}{{\mathbf A}}
+\newcommand{\bB}{{\mathbf B}}
+\newcommand{\bC}{{\mathbf C}}
+\newcommand{\bD}{{\mathbf D}}
+\newcommand{\bE}{{\mathbf E}}
+\newcommand{\bF}{{\mathbf F}}
+\newcommand{\bG}{{\mathbf G}}
+\newcommand{\bH}{{\mathbf H}}
+\newcommand{\bI}{{\mathbf I}}
+\newcommand{\bJ}{{\mathbf J}}
+\newcommand{\bK}{{\mathbf K}}
+\newcommand{\bL}{{\mathbf L}}
+\newcommand{\bM}{{\mathbf M}}
+\newcommand{\bN}{{\mathbf N}}
+\newcommand{\bO}{{\mathbf O}}
+\newcommand{\bP}{{\mathbf P}}
+\newcommand{\bQ}{{\mathbf Q}}
+\newcommand{\bR}{{\mathbf R}}
+\newcommand{\bS}{{\mathbf S}}
+\newcommand{\bT}{{\mathbf T}}
+\newcommand{\bU}{{\mathbf U}}
+\newcommand{\bV}{{\mathbf V}}
+\newcommand{\bW}{{\mathbf W}}
+\newcommand{\bX}{{\mathbf X}}
+\newcommand{\bY}{{\mathbf Y}}
+\newcommand{\bZ}{{\mathbf Z}}
+
+% Greek bold letters
+\newcommand{\balpha}{{\bm\alpha}}
+\newcommand{\bbeta}{{\bm\beta}}
+\newcommand{\bgamma}{{\bm\gamma}}
+\newcommand{\bdelta}{{\bm\delta}}
+\newcommand{\bepsilon}{{\bm\epsilon}}
+\newcommand{\bvarepsilon}{{\bm\varepsilon}}
+\newcommand{\bzeta}{{\bm\zeta}}
+\newcommand{\bfeta}{{\bm\eta}}
+\newcommand{\boldeta}{{\bm\eta}}
+\newcommand{\btheta}{{\bm\theta}}
+\newcommand{\bvartheta}{{\bm\vartheta}}
+\newcommand{\biota}{{\bm\iota}}
+\newcommand{\bkappa}{{\bm\kappa}}
+\newcommand{\blambda}{{\bm\lambda}}
+\newcommand{\bmu}{{\bm\mu}}
+\newcommand{\bnu}{{\bm\nu}}
+\newcommand{\bxi}{{\bm\xi}}
+\newcommand{\bpi}{{\bm\pi}}
+\newcommand{\bvarpi}{{\bm\varpi}}
+\newcommand{\brho}{{\bm\rho}}
+\newcommand{\bvarrho}{{\bm\varrho}}
+\newcommand{\bsigma}{{\bm\sigma}}
+\newcommand{\bvarsigma}{{\bm\varsigma}}
+\newcommand{\btau}{{\bm\tau}}
+\newcommand{\bupsilon}{{\bm\upsilon}}
+\newcommand{\bphi}{{\bm\phi}}
+\newcommand{\bvarphi}{{\bm\varphi}}
+\newcommand{\bchi}{{\bm\chi}}
+\newcommand{\bpsi}{{\bm\psi}}
+\newcommand{\bomega}{{\bm\omega}}
+
+\newcommand{\bGamma}{{\bm\Gamma}}
+\newcommand{\bDelta}{{\bm\Delta}}
+\newcommand{\bTheta}{{\bm\Theta}}
+\newcommand{\bLambda}{{\bm\Lambda}}
+\newcommand{\bXi}{{\bm\Xi}}
+\newcommand{\bPi}{{\bm\Pi}}
+\newcommand{\bSigma}{{\bm\Sigma}}
+\newcommand{\bUpsilon}{{\bm\Upsilon}}
+\newcommand{\bPhi}{{\bm\Phi}}
+\newcommand{\bPsi}{{\bm\Psi}}
+\newcommand{\bOmega}{{\bm\Omega}}
+
+% Probability and Statistics
+\DeclareMathOperator{\Prob}{P}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\N}{N}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\logit}{logit}
+\DeclareMathOperator{\Mult}{Mult}
+\DeclareMathOperator{\Pois}{Pois}
+\DeclareMathOperator{\ind}{\mathds{1}}
+
+% Blackboard bold
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbS}{\mathbb{S}}
+\newcommand{\bbH}{\mathbb{H}}
+
+% Math calligraphic fonts
+\newcommand{\cA}{{\mathcal A}}
+\newcommand{\cB}{{\mathcal B}}
+\newcommand{\cC}{{\mathcal C}}
+\newcommand{\cD}{{\mathcal D}}
+\newcommand{\cE}{{\mathcal E}}
+\newcommand{\cF}{{\mathcal F}}
+\newcommand{\cG}{{\mathcal G}}
+\newcommand{\cH}{{\mathcal H}}
+\newcommand{\cI}{{\mathcal I}}
+\newcommand{\cJ}{{\mathcal J}}
+\newcommand{\cK}{{\mathcal K}}
+\newcommand{\cL}{{\mathcal L}}
+\newcommand{\cM}{{\mathcal M}}
+\newcommand{\cN}{{\mathcal N}}
+\newcommand{\cO}{{\mathcal O}}
+\newcommand{\cP}{{\mathcal P}}
+\newcommand{\cQ}{{\mathcal Q}}
+\newcommand{\cR}{{\mathcal R}}
+\newcommand{\cS}{{\mathcal S}}
+\newcommand{\cT}{{\mathcal T}}
+\newcommand{\cU}{{\mathcal U}}
+\newcommand{\cV}{{\mathcal V}}
+\newcommand{\cW}{{\mathcal W}}
+\newcommand{\cX}{{\mathcal X}}
+\newcommand{\cY}{{\mathcal Y}}
+\newcommand{\cZ}{{\mathcal Z}}
+
+% Conveniences
+\newcommand{\half}[1][1]{\frac{#1}{2}}  % \half for 1/2 or \half[n] for n/2, etc.
