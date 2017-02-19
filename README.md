@@ -1,8 +1,8 @@
-# Introduction
+## Introduction
 
 This serves to be the definitive template for all articles I will be writing. In addition to providing a template, I also resolve a way to work with a large project which might span several .tex or .Rnw files, and the issue of combining and managing these files to produce the final document. 
 
-# TL;DR
+## TL;DR
 
 I managed to automate a multi-file (both .tex and .Rnw) project, such that the main document will weave and compile the relevant .Rnw files if any changes are detected in the children or main document itself.
 
@@ -10,7 +10,7 @@ I describe a work-flow which you can emulate below. Feel free to use this templa
 
 Don't forget to install all required software.
 
-# Prerequisites
+## Prerequisites
 
 I have only made tests on macOS 10.12.3 (Sierra). I suspect this will work on Unix systems, but for Windows it might require a little extra work. Make sure to install all of the following software:
 
@@ -25,11 +25,11 @@ I have only made tests on macOS 10.12.3 (Sierra). I suspect this will work on Un
 
 I hope I'm not missing anything.
 
-# My workflow
+## My workflow
 
 [TBC]
 
-# Problem statement
+## Problem statement
 
 For large LaTeX documents, it is advisable to split the document into smaller parts, e.g. one .tex file for each section. This is to avoid the .tex file becoming overly complex and unwieldy due to the sheer volume of text. Therefore, there must be one parent .tex document which collates all of the child .tex documents which would then be typeset into the desired PDF file. A few problems arise:
 
@@ -38,7 +38,7 @@ For large LaTeX documents, it is advisable to split the document into smaller pa
 3. The issue with .Rnw conversion to .pdf is that the .synctex file gets messed up, because the .synctex is traditionally supposed to point the PDF to the .tex file. As mentioned, the source is actually the .Rnw file.
 4. When collaborators or reviewers are involved, they may not be comfortable with working with .Rnw files, or possibly would like to work on one single .tex file. Either way, would like a tool to visually markup changes or comments made across versions.
 
-# The `standalone` LaTeX package
+## The `standalone` LaTeX package
 
 One convention to splitting the .tex document into smaller parts, is to literally just shift the text of each chapter, say, into separate .tex (child) documents. These .tex files are linked to parent document via `\input`. Normally, one can work on the individual child .tex files, but they are not compilable, in the sense that they are not a complete "standalone" .tex document that is able to be compiled (because they're just texts from where it would otherwise be in the main parent .tex document!). What you would then have to do is actually compile the whole document just to view a change in the child document, or alternatively never compile it and just "eye it" from the source editor. Either way is unsatisfactory.
 
@@ -52,7 +52,7 @@ To make things neater, you should collate all of the LaTeX packages to be used, 
 
 I prefer to have all files in one flat directory, and use a `01-intro.tex`, `02-body.tex`, etc. naming system for the files. In fact, I would encourage this (for reasons to be explained later in the .Rnw knitting part and `latexdiff` part). However, if you prefer to have them in separate folders that is fine too. To make this easier, use the `import` package, so that you can use the `\import` or `\subimport` functions which are able to take relative directories, instead of absolute directories. What I mean is that, since the .sty file will be in the parent directory, then you would call this file via `../haziq_article.sty` from one of the upper child directories. 
 
-# Weaving .Rnw files using `knitr`
+## Weaving .Rnw files using `knitr`
 
 .Rnw files are LaTeX files which contain "code chunks" to be evaluated (by R). The .Rnw files are pre-processed by R to evaluate all the code chunks and return the results (or plot figures, which is useful!) in a process called "weaving". The end-product of this pre-processing is a .tex file. The .tex file is then converted into PDF in the normal way.
 
@@ -62,7 +62,7 @@ The main integrated development environment (IDE) that works out-of-the-box to c
 
 Luckily, there are a few TeX editors that are able to **knit** .Rnw files. It is likely that your TeX editor supports knitting .Rnw files using `knitr` as well. See [this](https://yihui.name/knitr/demo/editors/) link for information on how to set this up.
 
-# Patching the .synctex file
+## Patching the .synctex file
 
 In most TeX IDEs, the viewer allows you to "go to source" from the PDF file, and the other way around as well - "go to PDF" from the source. Sometimes, this is implemented using `cmd/ctrl + click`. It is a very useful feature to be able to jump from the PDF and source like this and pinpoint where exactly in your source document you need to make the edits. This ability is provided by the .synctex file, which is an auxilliary file created during the typesetting process from .tex to .pdf. 
 
@@ -72,7 +72,7 @@ There is a way around this, and that is to use the R package called `patchDVI`. 
 
 Even though the name implies using Sweave, there is an option for the `knitr` engine to be used instead. The `SweavePDF()` function takes in the .Rnw file as an argument, then runs it through `knitr` (via `knitr::knit2pdf()`), and finally converts it to PDF using the `pdflatex` engine (or some other latex engine). Along the way, the .synctex is also "patched", and thus we are able to go to the .Rnw source from the PDF and vice versa.
 
-# Using a custom build script in a TeX editor
+## Using a custom build script in a TeX editor
 
 Unless you are using Rstudio, your PDF viewer most likely won't be able to go to source due to the .synctex issue described above. What we need is to write a custom build script to tell the TeX editor exactly how to deal with .Rnw files. 
 
@@ -100,7 +100,7 @@ patchDVI::useknitr()
 
 As a side note, this is equivalent to using the LaTeX package `Sweave` and calling `\SweaveOpts{Concordance=TRUE}` if the weaving engine is Sweave. This is not required when using `knitr`, but instead, include the above code chunk.
 
-# Bibliographies and references
+## Bibliographies and references
 
 A seasoned TeX user knows that one needs to run `bibtex` with a couple more `pdflatex` runs to fully get the bibliographies and references linked within the document. Similarly, the PDF output of the `SweavePDF()` won't have linked bibliographies and references if running for the first time. 
 
@@ -114,7 +114,7 @@ The function is essentially `latexmk -pdf` to get a PDF output, with options `-i
 
 In my testing, setting `--synctex=0` does not resolve the issue.
 
-# Patch the .synctex... again
+## Patch the .synctex... again
 
 Using another function from the `patchDVI` package, we can correct the .synctex after it was handled by `latexmk`. The function is simply
 
@@ -124,7 +124,7 @@ R -e "patchDVI::patchSynctex('%.synctex')"
 
 Finally, we have a sync-able PDF file after putting these three lines in our custom build script.
 
-# A multi-file project
+## A multi-file project
 
 Just to reiterate the annoyance of not having a patched .synctex file: If we were to click on "go to source" in the viewer, it would point to the .tex file and not the .Rnw file. Unfortunately, the .tex file looks very similar to the .Rnw file and one would be inclined to make the mistake of editing the .tex file instead. When the file is woven again, changes will be lost because the edits were not made at the source!
 
@@ -138,7 +138,7 @@ Imagine having several .Rnw child files, and perhaps some .tex child files as we
 
 The `patchDVI` package again has a neat project management feature to automate this. The requirement is that the parent file *must* be a .Rnw file, and *not a .tex file*. All of the .Rnw files are linked to each other, such that a change in one triggers the all of the relevant .Rnw files to compile again. This is achieved by adding special chunk codes at the top of each .Rnw file. 
 
-### The `child.Rnw` file
+##### The `child.Rnw` file
 
 ```r
 <<include = FALSE, cache = FALSE>>=
@@ -146,7 +146,7 @@ The `patchDVI` package again has a neat project management feature to automate t
 @
 ```
 
-### The `main.Rnw` file
+##### The `main.Rnw` file
 
 ```r
 <<include = FALSE, cache = FALSE>>=
@@ -154,7 +154,7 @@ The `patchDVI` package again has a neat project management feature to automate t
 @
 ```
 
-## What it does
+### What it does
 
 The `patchDVI` has a function called `SweaveAll()` which is able to Sweave/knit multiple .Rnw files. This function can run automatically after `SweavePDF()` is called, but it needs to look for four specific variables in the R global environment. Three of these are desrcibed below.
 
@@ -164,7 +164,7 @@ The `patchDVI` has a function called `SweaveAll()` which is able to Sweave/knit 
 
 For more information, visit the CRAN website for the [package vignette](https://cran.r-project.org/web/packages/patchDVI/vignettes/patchDVI.pdf). 
 
-# Track changes with Git and `latexdiff`
+## Track changes with Git and `latexdiff`
 
 Git is an excellent tool for version control of software, code and even documents including LaTeX files. In addition to being able to track changes, Git can also allow you to see what was changed with each commit. But Git only allows you to see code diff.
 
@@ -178,7 +178,7 @@ latexdiff old.tex new.tex > diff.tex
 
 I've basically written an executable shell script to look for `main.tex` and `main_old.tex` in the parent directory and produce a `main_diff.tex` output. This was intended to be run on the main parent .tex file only. However, because of the `\input` calls to the child .tex files, any changes in the children files will not be tracked. Thus, it is necessary to flatten the document first.
 
-# Flatten the document
+## Flatten the document
 
 The Python script `flatex.py` over at [this](https://github.com/johnjosephhorton/flatex) GitHub repo does exactly what we need. It searches the `main.tex` file for any `\input` and copies the text from the children document in the parent document (replacing the `\input` call), resulting in a one continous, long, flattened document. 
 
@@ -188,7 +188,7 @@ Again, I've written an executable shell script to call `flatex.py` on the `main.
 
 Note that most flatten scripts I've looked for are not compatible with `\import` (they only search and replace `\input`). This is a reason to use `\input` instead of `\import` in this work-flow. The results are virtually the same, regardless.
 
-# Final thoughts
+## Final thoughts
 
 1. Put all children files and parent files in the same directory, i.e. do not use subdirectories. The reason is that the `SweaveAll()` function is mainly run relative to the directory from which you call the .Rnw file. For instance, running `SweaveAll()` on `main.Rnw` in the root directory, and then needing to knit the children files in their respective subdirectories will cause the processed `child.tex` file to appear in the root directory instead (because it was called by `main.Rnw`).
 
@@ -199,6 +199,7 @@ You might think this is a waste of time because all .Rnw files need to be knitte
 3. A couple of notes on the `standalone` package if using the `flatex` and `latexdiff` scripts. Since each of the children documents are standalones, and have their own `\documentclass` and `\begin` and `\end`, this obviously will result in compilation error when the file is flattened. One way around this is to manually comment out the front and end matters before flattening. This is a small price to pay, I think.
 
 4. The other thing about the `standalone` class is you might have a few citations problem. If you include `\bibliography{file.bib}` at the end in each standalone .tex files, then in the parent document you might see a lot of References section croppint up. To resolve this, either 1) manually comment out the bib command; 2) use `\nobibliography{file.bib}` instead - this skips printing the references section but citations are still valid; or 3) use the '\ifstandalone ... \fi' macro to turn on bibliography only when in standalone mode.
+
 
 
 Copyright (C) 2016  Haziq Jamil
