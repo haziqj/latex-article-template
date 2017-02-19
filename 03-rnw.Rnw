@@ -18,7 +18,7 @@ knitr::opts_chunk$set(prompt = FALSE, fig.align = "center", fig.width = 7, fig.h
 knitr::knit_theme$set("bclear")
 @
 
-We can include some R code here. Hello
+We can include some R code here.
 
 <<cache = TRUE>>=
 library(iprior)
@@ -43,7 +43,7 @@ plot(mod, plots = c(2,3))
 %\bibliographystyle{apalike}
 %\bibliography{haziq}
 %\fi
-
+%
 %\end{document}
 
 
